@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html> 
+    <head> 
+        <title>Cycler</title>
+    <style>
+    .flex-container {
+        display: flex;  
+        flex-direction:row;
+        background-color: red;
+    }
+    .flex-container > div {  
+        background-color:whitesmoke; 
+        margin: 10px;  
+        padding: 20px;  
+        font-size: 30px;
+    }
+    @media (max-width: 600px) { 
+	.flex-container{
+		flex-direction:column;
+		background-color: green;
+	  }
+	}
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"   
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js" 
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container text-center">
+        <div class="container-fluid p-4 text-center bg-danger">
+            <h1>Meghana Bobbili builds a cycler</h1>
+        </div><br><br>
+        <div class="flex-container bg-secondary" id="target">
+            <div class="cycler">web</div>   
+            <div class="cycler">apps</div>  
+            <div class="cycler">cycler</div>  
+        </div><br>
+        <label for="inputElement">Type something to add into cycler : <br></label>
+        <input class="form-control" type="text" name="input" id="inputElement" value="">
+        <br>
+        <p class="message"> 
+            Press Add Value button to add the text to cycler<br>Press Get button to remove value from cycler<br>Press Spin button to reverse the values of cycler
+        </p>
+        <br>
+        <br>
+        <div class="container text-center">
+            <button class="btn btn-primary" type="submit" onclick="makeNewDiv()">Add Value</button>
+            <button class="btn btn-warning" type="submit" onclick="get()">Get</button>
+            <button class="btn btn-success" type="submit" onclick="spin()">Spin</button>
+            <button class="btn btn-danger" type="submit" onclick="swap()">Swap</button>
+        </div>
+
+    </div>
+
+    <script>
+        function makeNewDiv() {
+            let element = document.createElement("div")
+            let value = document.getElementById("inputElement").value
+
+            element.innerHTML = value
+            element.className = "cycler"
+
+            let container = document.getElementById("target")
+            container.appendChild(element)
+        }
+    
+        function get() {
+            let cyclerItems = document.getElementsByClassName("cycler")
+            if(cyclerItems.length > 0) {
+                cyclerItems[cyclerItems.length-1].remove()
+            }
+        }
+
+        function spin() {
+            let cyclerItems = document.getElementsByClassName("cycler")
+            if(cyclerItems.length > 1) {
+                removedItem = cyclerItems[cyclerItems.length-1]
+                cyclerItems[cyclerItems.length-1].remove()
+                let container = document.getElementById("target")
+                container.insertBefore(removedItem, container.firstChild)
+            }
+        }
+
+        function swap() {
+            let cyclerItems = document.getElementsByClassName("cycler")
+            let container = document.getElementById("target")
+            let first = Math.floor(Math.random() * cyclerItems.length)
+            let second = Math.floor(Math.random() * cyclerItems.length)
+            let firstText = document.getElementsByClassName("cycler")[first]
+            let secondText = document.getElementsByClassName("cycler")[second]
+            if(cyclerItems.length > 1) {
+                let temp = firstText.innerHTML
+                firstText.innerHTML = secondText.innerHTML
+                secondText.innerHTML = temp
+            }
+        }
+    </script>
+</body>
+</html>	
